@@ -1,6 +1,6 @@
 # "Now you see it":  a build system for CITE Image services #
 
-`nysi` generates RDF statements from a collection CITE Images using the RDF vocabulary expected by the `sparqcts` implementation of CITE Image Services.
+`nysi` generates RDF statements from a collection CITE Images using the RDF vocabulary expected by the `sparqlcts` implementation of CITE Image Services.
 
 Initially, `nysi` supports data in locally stored `csv` files.  It could easily expand to include Google Fusion Tables and local `tsv` files as data sources.
 
