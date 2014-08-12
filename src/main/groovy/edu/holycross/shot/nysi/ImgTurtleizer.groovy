@@ -24,6 +24,10 @@ class ImgTurtleizer {
     throws Exception {
         StringBuffer reply = new StringBuffer()
         this.collectionSrc.getCollectionsData().each { triple ->
+            if (triple.size() != 5){
+                    System.err.println "ImgTurtleizer: Found ${triple.size()} fields; there should be 5."
+                   throw new Exception("colNum")
+            }
             if (triple[0].size() > 4) {
                 try {
                     CiteUrn urn = new CiteUrn(triple[0])
@@ -35,6 +39,7 @@ class ImgTurtleizer {
 
                 } catch (Exception e) {
                     System.err.println "ImgTurtleizer: FAILED TO PARSE record for ${triple[0]} with length ${triple[0].size()}"
+                    throw e
                 }
             }
         }
