@@ -32,6 +32,12 @@ if (hasProperty('pub')) {
 group = "edu.holycross.shot"
 version = "0.1.13"
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
 repositories {
     mavenCentral()
 
