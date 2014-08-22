@@ -2,76 +2,103 @@ package edu.holycross.shot.nysi
 
 import edu.harvard.chs.cite.CiteUrn
  
-/** Class for working with a variety of data sources, and
-* generting RDF statements.
-*/
+/** Class for generating RDF statements for the HMT project's CITE Image extension.
+ * The ImgTurtleizer uses csv or tsv files to create ImageCollection objects,
+ * and can generate RDF statements for each Image Collection.
+ */
 class ImgTurtleizer {
 
-    static String prefix = "@prefix hmt:        <http://www.homermultitext.org/hmt/rdf/> .\n@prefix cite:        <http://www.homermultitext.org/cite/rdf/> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n"
-
-    File inventoryDir
-
-    CollectionsSrc collectionSrc
+  /** RDF prefix declarations. */
+  static String prefix = "@prefix hmt:        <http://www.homermultitext.org/hmt/rdf/> .\n@prefix cite:        <http://www.homermultitext.org/cite/rdf/> .\n\n"
 
 
-    ImgTurtleizer(String collDirName) 
-    throws Exception {
-        this.inventoryDir = new File (collDirName)
+  /** A group of configurations for one or more Image Collection extensions. */
+  //ImageService imgService = 
+
+  /** A directory with configuration files. */
+  File sourceDir
+
+
+  /** Constructor taking String name of a directory.
+   * @param collDirName Name of directory with Image Colleciton 
+   * configuration files.
+   * @throws Exception if a file cannot be made from dirName.
+   */
+  ImgTurtleizer(String dirName) 
+  throws Exception {
+    this.sourceDir = new File (dirName)
+  }
+
+
+
+  /** Creates a String composed of TTL statements documenting
+   * all configured Image Collection extensions.
+   * @param svc The ImageService to describe in RDF.
+   * @returns A multi-line String of TTL.
+   * @throws Exception if any lines of the configuration files
+   * cannot be parsed.
+   */
+  String ttlizeCollections(ImageService svc) 
+  throws Exception {
+    StringBuffer reply = new StringBuffer()
+    svc.getCollectionConfigs().each { imgColl ->
+      reply.append("<${imgColl.getUrn()}> rdf:type cite:ImageArchive .\n")
+      //reply.append("<${urn}> rdf:label " + '"' + triple[1] + '" .\n')
+      reply.append("<${imgColl.getUrn()}> hmt:path " + '"' + imgColl.getPath() + '" .\n')
+      reply.append("<${imgColl.getUrn()}> hmt:imageCaptionProperty " + '"' + imgColl.getCaptionProperty() + '" .\n')
+      reply.append("<${imgColl.getUrn()}> hmt:imageRightsProperty " + '"' + imgColl.getRightsProperty() + '" .\n')
+    }
+    return reply.toString()
+  }
+
+
+  /*
+  void ttl(File outFile) {
+    ttl(outFile, false)
+  }
+
+  void ttl(File outFile, boolean includePrefix) {
+    outFile.append(ttlize(includePrefix), "UTF-8")
+  }
+*/
+
+  /** Creates a String composed of RDF prefix and TTL statements documenting
+   * all configured Image Collection extensions found in
+   * this turtleizer's source directory.
+   * @returns A multi-line String of TTL.
+   * @throws Exception if any lines of the configuration files
+   * cannot be parsed.
+   */
+  String ttlize() 
+  throws Exception {
+    return ttlize(true)
+  }
+
+
+
+
+  /** Creates a String, optionally including RDF prefix statements,
+   *  composed of TTL statements documenting
+   * all configured Image Collection extensions found in
+   * this turtleizer's source directory.  
+   * @param includePrefix True if RDF prefix statements should be
+   * included.
+   * @returns A multi-line String of TTL.
+   * @throws Exception if any lines of the configuration files
+   * cannot be parsed.
+   */
+  String ttlize(boolean includePrefix) {
+    StringBuffer reply = new StringBuffer()
+    if (includePrefix) {
+      reply.append(prefix)
     }
 
-
-    String ttlizeCollections() 
-    throws Exception {
-        StringBuffer reply = new StringBuffer()
-        this.collectionSrc.getCollectionsData().each { triple ->
-            if (triple.size() != 5){
-                    System.err.println "ImgTurtleizer: Found ${triple.size()} fields; there should be 5."
-                   throw new Exception("colNum")
-            }
-            if (triple[0].size() > 4) {
-                try {
-                    CiteUrn urn = new CiteUrn(triple[0])
-                    reply.append("<${urn}> rdf:type cite:ImageArchive .\n")
-                    reply.append("<${urn}> rdf:label " + '"' + triple[1] + '" .\n')
-                    reply.append("<${urn}> hmt:path " + '"' + triple[2] + '" .\n')
-                    reply.append("<${urn}> hmt:imageCaptionProperty " + '"' + triple[3] + '" .\n')
-                    reply.append("<${urn}> hmt:imageRightsProperty " + '"' + triple[4] + '" .\n')
-
-                } catch (Exception e) {
-                    System.err.println "ImgTurtleizer: FAILED TO PARSE record for ${triple[0]} with length ${triple[0].size()}"
-                    throw e
-                }
-            }
-        }
-        return reply.toString()
-    }
+    ImageService tsv = new TsvCollections(this.sourceDir)
+    reply.append(ttlizeCollections(tsv))
+    ImageService csv = new CsvCollections(this.sourceDir)
+    reply.append(ttlizeCollections(csv))
+    return reply.toString()
+  }
 
 
-
-    String ttlize() {
-        return ttlize(true)
-    }
-
-
-    void ttl(File outFile) {
-        ttl(outFile, false)
-    }
-
-    void ttl(File outFile, boolean includePrefix) {
-        outFile.append(ttlize(includePrefix), "UTF-8")
-    }
-
-    String ttlize(boolean includePrefix) {
-        StringBuffer reply = new StringBuffer()
-        if (includePrefix) {
-            reply.append(prefix)
-        }
-
-        this.collectionSrc = new TsvCollections(this.inventoryDir)
-        reply.append(ttlizeCollections())
-        this.collectionSrc = new CsvCollections(this.inventoryDir)
-        reply.append(ttlizeCollections())
-
-        return reply.toString()
-    }
 }

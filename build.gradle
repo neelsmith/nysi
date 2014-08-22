@@ -49,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    groovy  group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
+	     compile	   group: 'org.codehaus.groovy', name: 'groovy-all', version: groovyVersion
 
     compile group: 'net.sf.opencsv', name: 'opencsv', version : opencsvVersion
 
