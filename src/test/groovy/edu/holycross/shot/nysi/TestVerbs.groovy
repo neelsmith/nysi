@@ -16,13 +16,14 @@ class TestVerbs extends GroovyTestCase {
     @Test void testVerbs() {
         ImgTurtleizer ittl = new ImgTurtleizer(collSource)
         String testttl = ittl.ttlize() 
-
-        assert testttl.indexOf("rdf:type") >= 0
-        assert testttl.indexOf("rdf:label") >= 0
+        assert testttl.indexOf("rdf:type") >=  0
+	assert testttl.indexOf("rdf:label") < 1
         assert testttl.indexOf("hmt:path") >= 0
         assert testttl.indexOf("hmt:imageCaptionProperty") >= 0
         assert testttl.indexOf("hmt:imageRightsProperty") >= 0
-        
+
+
+	assert testttl.indexOf("rdf:label") < 1
     }
 
 }

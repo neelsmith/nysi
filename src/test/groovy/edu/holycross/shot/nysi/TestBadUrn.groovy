@@ -9,16 +9,12 @@ import org.junit.Test
 
 class TestBadUrn extends GroovyTestCase {
 
-    String collSource = "testdata/collections-badurn"
+  String collSource = "testdata/collections-badurn"
 
- 
-
-    @Test void testBadUrn() {
-        ImgTurtleizer ittl = new ImgTurtleizer(collSource)
-        assert shouldFail {
-                String testttl = ittl.ttlize() 
-        }
-        
-    }
-
+   @Test void testBadUrn() {
+     ImgTurtleizer ittl = new ImgTurtleizer(collSource)
+     assert shouldFail {
+       String testttl = ittl.ttlize() 
+     }
+   }
 }
