@@ -9,8 +9,7 @@ import edu.harvard.chs.cite.CiteUrn
 class ImgTurtleizer {
 
   /** RDF prefix declarations. */
-  static String prefix = "@prefix hmt:        <http://www.homermultitext.org/hmt/rdf/> .\n@prefix cite:        <http://www.homermultitext.org/cite/rdf/> .\n\n"
-
+  static String prefix = "@prefix hmt:        <http://www.homermultitext.org/hmt/rdf/> .\n@prefix cite:        <http://www.homermultitext.org/cite/rdf/> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>. \n\n"
 
   /** A group of configurations for one or more Image Collection extensions. */
   //ImageService imgService = 
