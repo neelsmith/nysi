@@ -52,15 +52,26 @@ class ImgTurtleizer {
   }
 
 
-  /*
-  void ttl(File outFile) {
+  /** Turtleize configuration of all Image Collection extensions,
+   * and write resulting TTL, without RDF prefix statements, to outFile.
+   * @param outFile File where TTL is written.
+   */
+  void ttl(File outFile) 
+  throws Exception {
     ttl(outFile, false)
   }
 
-  void ttl(File outFile, boolean includePrefix) {
+
+  /** Turtleize configuration of all Image Collection extensions,
+   * and write resulting TTL, optionally including RDF prefix statements, to outFile.
+   * @param outFile File where TTL is written.
+   * @param includePrefix True if RDF prefix satements should be included.
+   */
+  void ttl(File outFile, boolean includePrefix) 
+  throws Exception {
     outFile.append(ttlize(includePrefix), "UTF-8")
   }
-*/
+
 
   /** Creates a String composed of RDF prefix and TTL statements documenting
    * all configured Image Collection extensions found in
@@ -73,9 +84,6 @@ class ImgTurtleizer {
   throws Exception {
     return ttlize(true)
   }
-
-
-
 
   /** Creates a String, optionally including RDF prefix statements,
    *  composed of TTL statements documenting
