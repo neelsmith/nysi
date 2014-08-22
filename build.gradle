@@ -30,7 +30,7 @@ if (hasProperty('pub')) {
 }
 
 group = "edu.holycross.shot"
-version = "0.1.13"
+version = "0.2.1"
 
 test {
     testLogging {
