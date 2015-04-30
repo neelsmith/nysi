@@ -19,7 +19,7 @@ class ImgTurtleizer {
 
 
   /** Constructor taking String name of a directory.
-   * @param collDirName Name of directory with Image Colleciton 
+   * @param dirName Name of directory with Image Colleciton 
    * configuration files.
    * @throws Exception if a file cannot be made from dirName.
    */
