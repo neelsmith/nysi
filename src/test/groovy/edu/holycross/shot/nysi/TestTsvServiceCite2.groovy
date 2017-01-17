@@ -1,18 +1,14 @@
 package edu.holycross.shot.nysi
 
-import edu.harvard.chs.cite.CtsUrn
-
-import au.com.bytecode.opencsv.CSVReader
-
 import static org.junit.Assert.*
 import org.junit.Test
 
-class TestCsvService extends GroovyTestCase {
+class TestTsvServiceCite2 extends GroovyTestCase {
 
   String collSource = "testdata/collections"
 
   @Test void testConstructor() {
-    CsvCollections imgSvc = new CsvCollections(collSource)
+    TsvCollections imgSvc = new TsvCollections(collSource)
     assert imgSvc
 
     def collList = imgSvc.getCollectionConfigs()

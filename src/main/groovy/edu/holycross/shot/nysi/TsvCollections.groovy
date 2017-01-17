@@ -1,6 +1,7 @@
 package edu.holycross.shot.nysi
 
 import edu.harvard.chs.cite.CiteUrn
+import edu.harvard.chs.cite.Cite2Urn
 
 
 /** Implementation of the ImageService interface
@@ -19,7 +20,7 @@ class TsvCollections implements ImageService {
    * @param dirName Name of directory containing .tsv files.
    * @throws Exception if a File cannot be made from dirName.
    */
-  TsvCollections(String dirName) 
+  TsvCollections(String dirName)
   throws Exception {
     this.tsvDir = new File(dirName)
   }
@@ -35,11 +36,11 @@ class TsvCollections implements ImageService {
   /** Returns an ArrayList of ImageCollection objects.
    * @throws Exception if input line cannot be parsed.
    */
-  ArrayList getCollectionConfigs() 
+  ArrayList getCollectionConfigs()
   throws Exception {
     ArrayList imageCollections = []
 
-    this.tsvDir.eachFileMatch(~/.*.tsv/) { file ->  
+    this.tsvDir.eachFileMatch(~/.*.tsv/) { file ->
       Integer num = 0
       file.eachLine { ln ->
 	num++;
@@ -55,4 +56,3 @@ class TsvCollections implements ImageService {
 
 
 }
-

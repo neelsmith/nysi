@@ -10,9 +10,10 @@ class TestTsvService extends GroovyTestCase {
   @Test void testConstructor() {
     TsvCollections imgSvc = new TsvCollections(collSource)
     assert imgSvc
-    
+
     def collList = imgSvc.getCollectionConfigs()
-    assert collList.size() == 1
+    assert collList.size() == 2
     assert collList[0] instanceof edu.holycross.shot.nysi.ImageCollection
+    assert collList[1] instanceof edu.holycross.shot.nysi.ImageCollection
   }
 }

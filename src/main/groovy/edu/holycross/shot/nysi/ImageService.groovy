@@ -1,6 +1,7 @@
 package edu.holycross.shot.nysi
 
 import edu.harvard.chs.cite.CiteUrn
+import edu.harvard.chs.cite.Cite2Urn
 
 
 /** An interface for configuring the CITE Image extension
@@ -17,5 +18,5 @@ interface ImageService {
    * - CITE Collection property to use for rights
    */
   abstract ArrayList getCollectionConfigs()
-  
+
 }

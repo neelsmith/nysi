@@ -1,7 +1,9 @@
 ext {
-    groovyVersion = "2.0.6"
+    //groovyVersion = "2.0.6"
+		groovyVersion = "2.+"
 
-    citeVersion = "0.94.1"
+    //citeVersion = "0.94.1"
+    citeVersion = "3.+"
 
     opencsvVersion  = "2.0"
 
